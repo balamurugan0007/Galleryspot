@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View,Text ,StyleSheet,SafeAreaView,Image,TextInput,Button, Pressable, Alert, ImageBackground,TouchableOpacity }from 'react-native'
-
+import { Appwrite } from '../database/Appwirte'
 
 
 const RegisterScreen = ({navigation}) => {
@@ -35,6 +35,7 @@ const RegisterScreen = ({navigation}) => {
        <ImageBackground style={styles.backgroundimage} source={require('../assets/images/back.jpeg')} >
            <View style={styles.formview}>
              <Text style={styles.header} >Gallery Spot</Text>
+             <Appwrite/>
      
                <View style={styles.formtextview}>
                <Text style={styles.formheader} >Register Here</Text>

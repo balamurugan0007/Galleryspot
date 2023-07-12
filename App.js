@@ -49,7 +49,10 @@ export default function App() {
   return (
     <NavigationContainer >
          <stack.Navigator>
+             
+            
              <stack.Screen name='Register' component={RegisterScreen} options={{header:()=>null}} />
+
              <stack.Screen name='Picture' component={Navigator} options={{header:()=>null}} />
              
          </stack.Navigator>

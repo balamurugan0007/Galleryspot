@@ -4,18 +4,28 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import HomeScreen from './Screens/HomeScreen';
 import UploadScreen from './Screens/UploadSceen';
 import ProfileScreen from './Screens/ProfileScreen';
-import AntIcons from 'react-native-vector-icons/AntDesign'
+import { Ionicons } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons'; 
+import { FontAwesome } from '@expo/vector-icons'; 
+
+
 
 const tab=createMaterialBottomTabNavigator();
 
 const Navigator = () => {
   return (
     <tab.Navigator  screenOptions={{
-      tabBarActiveTintColor: '#820080',
+      tabBarActiveTintColor: 'white',
     }}>
-         <tab.Screen name='Home' component={HomeScreen} options={{tabBarIcon:(size,color)=>{<AntIcons name='home' size={21} color={'black'}/>}}} />
-         <tab.Screen name='Upload' component={UploadScreen}/>
-         <tab.Screen name='Profile' component={ProfileScreen} />
+         <tab.Screen name='Home' component={HomeScreen} options={{tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" color='#EA3D70' size={21} />
+          ),tabBarColor:'black'}} />
+
+         <tab.Screen name='Upload' component={UploadScreen} options={{tabBarIcon: ({ color, size }) => (
+           <FontAwesome5 name="plus-circle" size={21} color="#EA3D70" />
+          ),}} />
+         <tab.Screen name='Profile' component={ProfileScreen} options={{tabBarIcon:({color,size})=>(
+         <FontAwesome name="user" size={24} color="#EA3D70" />),}}/>
     </tab.Navigator>
   )
 }
