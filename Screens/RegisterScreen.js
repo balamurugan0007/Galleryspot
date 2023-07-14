@@ -1,31 +1,36 @@
 import React, { useState } from 'react'
 import { View,Text ,StyleSheet,SafeAreaView,Image,TextInput,Button, Pressable, Alert, ImageBackground,TouchableOpacity }from 'react-native'
-import { Appwrite } from '../database/Appwirte'
-
+import app from '../database/Firebase'
+import {getAuth,createUserWithEmailAndPassword} from 'firebase/auth'
 
 const RegisterScreen = ({navigation}) => {
 
 
+  const register =()=>{
+    const auth = getAuth(app);
+createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    navigation.navigate('Login')
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    seterror(errorCode)
+    // ..
+  });
 
-
-
+  }
   //const user={"name":name,"age":email,"city":password}
   const [name,setname]=useState('')
   const [email,setemail]=useState('')
   const [password,setpassword]=useState('')
+  const[error,seterror]=useState(null)
 
   
-  const handlesubmit=()=>{
-    
-    if (name === '' || email==='' || password=== ''){
-      Alert.alert("please enter the all fields")
-    
-    }
-      else{
-        navigation.navigate("Picture",{"name":name,"age":email,"city":password})
-      }
-     
-  }
+  
 
   
 
@@ -35,19 +40,18 @@ const RegisterScreen = ({navigation}) => {
        <ImageBackground style={styles.backgroundimage} source={require('../assets/images/back.jpeg')} >
            <View style={styles.formview}>
              <Text style={styles.header} >Gallery Spot</Text>
-             <Appwrite/>
-     
+             
                <View style={styles.formtextview}>
                <Text style={styles.formheader} >Register Here</Text>
      
                       <TextInput style={styles.formname} placeholder='  Username' onChangeText={newText => setname(newText)}/>
-                      <TextInput style={styles.formname} placeholder='  Age' onChangeText={newText => setemail(newText)} />
-                       <TextInput style={styles.formname}  placeholder='  City' onChangeText={newText => setpassword(newText)} />
-                      <TouchableOpacity style={styles.submitbtn} onPress={handlesubmit}>
+                      <TextInput style={styles.formname} placeholder='  email' onChangeText={newText => setemail(newText)} />
+                       <TextInput style={styles.formname}  placeholder='  password' onChangeText={newText => setpassword(newText)} />
+                      <TouchableOpacity style={styles.submitbtn} onPress={register}>
                            <Text style={styles.submitbtntext}>Create Account</Text>
                       </TouchableOpacity>
-                      
-                          <Pressable >
+                      <Text>{ error? <Text>{error}</Text>:null}</Text>
+                          <Pressable onPress={()=>navigation.navigate('Login')} >
                             <Text style={styles.logintext}>You have an Account Login</Text> 
                           </Pressable>
                        

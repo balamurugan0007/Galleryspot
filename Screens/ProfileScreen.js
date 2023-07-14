@@ -1,13 +1,34 @@
 import React from 'react'
-import { SafeAreaView, Text ,View,StyleSheet} from 'react-native'
-
+import { SafeAreaView, Text ,View,StyleSheet, Button} from 'react-native'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import app from '../database/Firebase'
 const ProfileScreen = () => {
+
+
+ const userdata=()=>{
+  const auth = getAuth(app);
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+    const uid = user.uid;
+    console.log(uid)
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
+
+ }
+
   return (
    <SafeAreaView style={styles.container}>
        <View>
         
          <View >
            <Text style={styles.headertext}>Galleryspot</Text>
+           <Button title='getuser'  onPress={userdata}/>
         </View>
     </View>
    </SafeAreaView>

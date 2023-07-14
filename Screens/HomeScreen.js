@@ -7,7 +7,7 @@ import { Octicons } from '@expo/vector-icons';
 
 const HomeScreen = () => {
 
-  const userdata=useContext(UserContext)
+  
   
   return (
    <SafeAreaView style={styles.container}>
