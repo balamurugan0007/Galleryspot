@@ -2,53 +2,74 @@ import React, { useState } from 'react'
 import { SafeAreaView, Text ,View,StyleSheet, TextInput,Image, Touchable, TouchableOpacity,Pressable, Alert} from 'react-native'
 import { Ionicons } from '@expo/vector-icons'; 
 
-import {db,storage} from '../database/Firebase'
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { serverTimestamp } from "firebase/firestore";
-import * as ImagePicker from 'expo-image-picker';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useDoc } from '../hooks/useDoc';
-import { Appwrite } from '../pictures/Appwrite';
-import {  uploadBytes } from "firebase/storage";
+import { getStorage, ref, uploadBytes,uploadBytesResumable,updateMetadata } from "firebase/storage";
+
+import * as ImagePicker from 'expo-image-picker'
+import {storage} from '../database/Firebase'
+
+
 
 const UploadScreen = () => {
+
   const [image,setImage]=useState(null)
   const [title,settitle]=useState('')
   const [Catogory,setcatogory]=useState('')
   const [url,seturl]=useState('')
   const [description,setdescription]=useState('')
 
-  const {error,addDocument}=useDoc()
+  const {error,addDocument,uploadStorage}=useDoc();
+ 
+ 
 
+  const getimage = async() => {
 
-  
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-  const getimage = async() =>{
-     //const requst=await ImagePicker.getMediaLibraryPermissionsAsync();
-
-    // if(requst===false){
-    ///  Alert.alert('permission acsss deneid')
-    // }
-
-
-    const request=ImagePicker.getCameraPermissionsAsync();
-    let result=await ImagePicker.launchImageLibraryAsync({
-      mediaTypes:ImagePicker.MediaTypeOptions.All,
-      allowsEditing:false,
-      
-
-    })
-    if(!result.canceled){
-      console.log(result.uri);
-      setImage(result.assets);
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this appp to access your photos!");
+      return;
     }
+     
+        let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-    //Appwrite(image)
+    console.log(result);
 
-    const imagepath= await fetch(image)
+    if (!result.canceled) {
+      console.log(result.assets.uri);
+      setImage(result.uri);
+    }else{
+      alert('image not selected')
+    }
+  
+  
+  }
 
-// 'file' comes from the Blob or File API
-const storageRef = ref(storage, 'pictures/mountains.jpg');
+
+const uploadpin = async() =>{
+
+//gs://galleryspot-7a94d.appspot.com/Uploadpin/Review of Marvel’s Spider-man_ Miles Morales.jpeg
+ 
+const imageurl=`gs://galleryspot-7a94d.appspot.com/uploadimages/${title}`
+const data={
+  'title':title,
+  'catogory':Catogory,
+  'link':url,
+  'description':description,
+  'imagelink':imageurl,
+  
+  
+}
+
+const uploadUri = await fetch(image)
+
+
+const storageRef = ref(storage, 'images/arml');
 
 // Create file metadata including the content type
 /** @type {any} */
@@ -57,34 +78,7 @@ const metadata = {
 };
 
 // Upload the file and metadata
-const uploadTask = uploadBytes(storageRef, imagepath, metadata).then(console.log('suceess'));
-  }
-
-
-
-const uploadpin = async() =>{
- 
-
-{/*  const imagepath=await fetch(image.uri);
-
-
-  const storageRef = ref(storage, 'images/mountains.jpg');
- await uploadBytes(storageRef, imagepath).then((snapshot) => {
-    console.log('Uploaded a blob or file!');
-    console.lod(snapshot)
-  });
-*/}
-
-const data={
-  'title':title,
-  'catogory':Catogory,
-  'link':url,
-  'description':description,
-  
-  
-}
-addDocument(data)
-
+const uploadTask = uploadBytes(storageRef, uploadUri, metadata);
 
 }
 

@@ -1,21 +1,24 @@
 
-import React, { useEffect,useState } from 'react'
+import React, { createContext, useEffect,useState } from 'react'
 import {firebase} from '../database/Firebase'
-import { getAuth,signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth,signInWithEmailAndPassword,} from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
+import {app} from "../database/Firebase"
+
+
 
 export const UseAuth = () => {
 
   const navigation=useNavigation();
     
     const[error,seterror]=useState(null)
-
+    
 
 
    
   //Login function....      
  const Login =({email,password}) =>{
-            const auth = getAuth(firebase);
+         const auth = getAuth(firebase);
            signInWithEmailAndPassword(auth, email,password)
               .then((userCredential) => {
         
@@ -30,11 +33,11 @@ export const UseAuth = () => {
                const errorMessage = error.message;
              seterror(errorCode)
             }); 
-          
+
         
-    } 
-
-
+      
+        
+      };
 
 
 

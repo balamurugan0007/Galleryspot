@@ -1,12 +1,18 @@
-import React from 'react'
-import { Text ,View,StyleSheet,SafeAreaView,TextInput, Pressable} from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { Text ,View,StyleSheet,SafeAreaView,TextInput, Pressable, Button, ScrollView,Image} from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Octicons } from '@expo/vector-icons'; 
+import { useFecth } from '../hooks/useFetchImages';
+import Imgcard from '../cards/Imgcard';
 
 
 
 const HomeScreen = () => {
 
+ const [keyword,setkeyword]=useState('food')
+ 
+ const {image}=useFecth(keyword)
+ 
   
   
   return (
@@ -27,7 +33,20 @@ const HomeScreen = () => {
                      <Octicons name="apps" style={{margin:10}} size={24} color="#EA3D70" />
                  </Pressable>
              </View>
+             
         </View>
+        
+
+        <ScrollView >
+          <View style={styles.imagesview}>
+        {
+          image? image && image.map((images)=>(
+           <Imgcard key={images.id} images={images}/>
+          )) :
+          <Text>no images</Text>
+        }
+        </View>
+        </ScrollView>
         
    </SafeAreaView>
   )
@@ -69,6 +88,9 @@ headericons:{
   justifyContent:'space-between',
   marginLeft:40
   
+},imagesview:{
+  flexWrap:'wrap',
+  
 }
- 
+
 })
