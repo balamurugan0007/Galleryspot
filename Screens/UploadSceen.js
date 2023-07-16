@@ -42,6 +42,7 @@ const UploadScreen = () => {
 
     if (!result.canceled) {
       console.log(result.assets.uri);
+      
       setImage(result.uri);
     }else{
       alert('image not selected')
@@ -66,13 +67,16 @@ const data={
   
 }
 
-const uploadUri = await fetch(image)
+
+
+
+
+ const uploadUri = await fetch(image)
 
 
 const storageRef = ref(storage, 'images/arml');
 
-// Create file metadata including the content type
-/** @type {any} */
+
 const metadata = {
   contentType: 'image/jpeg',
 };
@@ -98,7 +102,7 @@ const uploadTask = uploadBytes(storageRef, uploadUri, metadata);
 
                <Pressable onPress={getimage} >
                     {image?
-                    <Image source={{uri:image}} style={{width:270,
+                    <Image source={{uri:image.uri}} style={{width:270,
                       height:300,}}/>
                     :<View style={styles.imageview}>
                         <Ionicons name="add-circle" size={34} color="#0077F3" />

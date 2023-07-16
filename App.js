@@ -14,6 +14,7 @@ import { useFonts,OpenSans_300Light,
 import RegisterScreen from './Screens/RegisterScreen'
 import Navigator from './Navigator';
 import LoginScreen from './Screens/LoginScreen';
+import ImageScreen from './Screens/ImageScreen';
 
 
 const stack=createStackNavigator();
@@ -52,6 +53,7 @@ export default function App() {
              <stack.Screen name='Login' component={LoginScreen} options={{header:()=>null}} />
 
              <stack.Screen name='Picture' component={Navigator} options={{header:()=>null}} />
+             <stack.Screen name='images' component={ImageScreen} options={{header:()=>null}} />
              
          </stack.Navigator>
          
