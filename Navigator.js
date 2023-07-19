@@ -4,9 +4,10 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import HomeScreen from './Screens/HomeScreen';
 import UploadScreen from './Screens/UploadSceen';
 import ProfileScreen from './Screens/ProfileScreen';
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons ,Foundation } from '@expo/vector-icons'; 
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { FontAwesome } from '@expo/vector-icons'; 
+import VideoScreen from './Screens/VideoScreen';
 
 
 
@@ -20,6 +21,10 @@ const Navigator = () => {
          <tab.Screen name='Home' component={HomeScreen} options={{tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" color='#EA3D70' size={21} />
           ),tabBarColor:'black'}} />
+         
+         <tab.Screen name='videos' component={VideoScreen} options={{tabBarIcon: ({ color, size }) => (
+           <Foundation name="play-video" size={21} color="#EA3D70" />
+          ),}} />
 
          <tab.Screen name='Upload' component={UploadScreen} options={{tabBarIcon: ({ color, size }) => (
            <FontAwesome5 name="plus-circle" size={21} color="#EA3D70" />

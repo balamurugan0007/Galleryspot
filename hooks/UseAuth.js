@@ -12,7 +12,6 @@ export const UseAuth = () => {
   const navigation=useNavigation();
     
     const[error,seterror]=useState(null)
-    
 
 
    

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 export const useFecth = (urlparams) =>{
       
    
-    const [image,setimage]=useState('')
+    const [result,setresult]=useState('')
 
     useEffect(()=>{
   
@@ -22,7 +22,7 @@ export const useFecth = (urlparams) =>{
             const result = await response.json();
            
            
-            setimage(result.hits)
+            setresult(result.hits)
         } catch (error) {
             console.error(error);
 
@@ -34,5 +34,5 @@ export const useFecth = (urlparams) =>{
   
   
 
-    return{image}
+    return{result}
 }

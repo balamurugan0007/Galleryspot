@@ -17,6 +17,7 @@ import LoginScreen from './Screens/LoginScreen';
 import ImageScreen from './Screens/ImageScreen';
 
 
+
 const stack=createStackNavigator();
 
 
@@ -49,11 +50,13 @@ export default function App() {
          <stack.Navigator>
              
             
-             <stack.Screen name='Register' component={RegisterScreen} options={{header:()=>null}} />
-             <stack.Screen name='Login' component={LoginScreen} options={{header:()=>null}} />
+             <stack.Screen name='Register' component={RegisterScreen} options={{header:()=>null}}  />
+             <stack.Screen name='Login' component={LoginScreen} options={{header:()=>null,presentation:'model'}}   />
 
              <stack.Screen name='Picture' component={Navigator} options={{header:()=>null}} />
+             
              <stack.Screen name='images' component={ImageScreen} options={{header:()=>null}} />
+             
              
          </stack.Navigator>
          

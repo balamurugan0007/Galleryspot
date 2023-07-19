@@ -6,7 +6,9 @@ import { useDoc } from '../hooks/useDoc';
 import { getStorage, ref, uploadBytes,uploadBytesResumable,updateMetadata } from "firebase/storage";
 
 import * as ImagePicker from 'expo-image-picker'
-import {storage} from '../database/Firebase'
+import {storage,db} from '../database/Firebase'
+import  {collection} from 'firebase/firestore'
+
 
 
 
@@ -18,7 +20,10 @@ const UploadScreen = () => {
   const [url,seturl]=useState('')
   const [description,setdescription]=useState('')
 
-  const {error,addDocument,uploadStorage}=useDoc();
+
+  const collectionRef =collection(db, "uploadpin")
+
+  const {error,addDocument,uploadStorage}=useDoc(collectionRef);
  
  
 
@@ -67,22 +72,8 @@ const data={
   
 }
 
-
-
-
-
- const uploadUri = await fetch(image)
-
-
-const storageRef = ref(storage, 'images/arml');
-
-
-const metadata = {
-  contentType: 'image/jpeg',
-};
-
-// Upload the file and metadata
-const uploadTask = uploadBytes(storageRef, uploadUri, metadata);
+addDocument(data)
+uploadStorage(image)
 
 }
 
@@ -102,7 +93,7 @@ const uploadTask = uploadBytes(storageRef, uploadUri, metadata);
 
                <Pressable onPress={getimage} >
                     {image?
-                    <Image source={{uri:image.uri}} style={{width:270,
+                    <Image source={{uri:image}} style={{width:270,
                       height:300,}}/>
                     :<View style={styles.imageview}>
                         <Ionicons name="add-circle" size={34} color="#0077F3" />

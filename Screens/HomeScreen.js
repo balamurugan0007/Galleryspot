@@ -4,6 +4,8 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons'; 
 import { useFecth } from '../hooks/useFetchImages';
 import Imgcard from '../cards/Imgcard';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 
@@ -11,22 +13,23 @@ const HomeScreen = () => {
 
  const [keyword,setkeyword]=useState('flowers')
 
-
+  const navigation =useNavigation();
  const url =`https://pixabay.com/api/?key=38267618-7930a7b89226cfbe7b393f302&q=${keyword}`
  
  
  
-    const {image}=useFecth(url)
+    const {result}=useFecth(url)
     
  
   return (
    <SafeAreaView style={styles.container}>
-        <View >
+         
+         <View >
            <Text style={styles.headertext}>Galleryspot</Text>
           
         </View>
 
-        <View style={{flexDirection:'row',backgroundColor:'#ffff',borderRadius:20,height:40,margin:4}}>
+        <View style={{flexDirection:'row',backgroundColor:'#ffff',borderRadius:20,height:40,margin:15}}>
 
              <TextInput
                   placeholder='  search'
@@ -37,29 +40,11 @@ const HomeScreen = () => {
                 <Ionicons name='ios-search-circle' size={28} color='#EA3D70' style={{margin:4}}/>
             
         </View>
-        <View style={styles.headerview}>
-             <Text style={styles.toppictext}>Pictures</Text>
-            
-             <View style={styles.headericons}>
-                 <Pressable >
-                    <MaterialIcons name="insert-photo" style={{margin:10}} size={24} color="#EA3D70" />
-
-                 </Pressable>
-                 <Pressable >
-                     <Entypo name="video-camera" style={{margin:10}} size={24} color="#EA3D70" />
-                 </Pressable>
-             </View>
-            
-
-             
-        </View>
         
-        
-
         <ScrollView showsVerticalScrollIndicator={false} >
            <View style={styles.imagesview}>
                {
-                image? image && image.map((images)=>(
+                result? result && result.map((images)=>(
                  <Imgcard key={images.id} images={images}/>
                 )) :
                

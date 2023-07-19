@@ -3,22 +3,32 @@ import { View,Text ,StyleSheet,SafeAreaView,Image,TextInput,Button, Pressable, A
 import app from '../database/Firebase'
 import {getAuth,createUserWithEmailAndPassword} from 'firebase/auth'
 
+import {useDoc} from '../hooks/useDoc';
+import {  collection } from "firebase/firestore"; 
+import {db} from '../database/Firebase'
+
+
 const RegisterScreen = ({navigation}) => {
 
 
+  //const {addDocument}=useDoc(collectionRef);
+
   const register =()=>{
+    
     const auth = getAuth(app);
 createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
+    //const data={'email':email,'name':name}
+    //addDocument(data)
     navigation.navigate('Login')
     // ...
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    seterror(errorCode)
+    setprocess(errorCode)
     // ..
   });
 
@@ -27,7 +37,17 @@ createUserWithEmailAndPassword(auth, email, password)
   const [name,setname]=useState('')
   const [email,setemail]=useState('')
   const [password,setpassword]=useState('')
-  const[error,seterror]=useState(null)
+  const[error,setprocess]=useState(null)
+  
+
+
+
+  let collectionRef =collection(db,'user')
+
+
+  ///store data in db
+
+
 
   
   

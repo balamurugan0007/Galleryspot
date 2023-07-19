@@ -7,33 +7,38 @@ import { getStorage, ref, uploadBytes } from "firebase/storage";
 import {storage} from '../database/Firebase'
 
 
-export const useDoc = () => {
-    const navigation=useNavigation();
 
+
+export const useDoc = (collection) => {
+    
+  const navigation=useNavigation();
     const [error,seterror]=useState(null)
 
 
+
+    ///storage upload files
     const  uploadStorage = async (image) =>{
 
-
-      const imagepath= await fetch(image)
-      const storageRef = ref(storage,`uploadimages/${title}` );
-     
+      const uploadUri = await fetch(image)
+      const storageRef = ref(storage, 'images/arml');
       const metadata = {
-        contentType: 'image/jpeg',
-       };
-  
-  // Upload the file and metadata
-      const uploadTask = uploadBytes(storageRef, imagepath, metadata).then(console.log('suceess'));
+            contentType: 'image/jpeg',
+        };
+
+      // Upload the file and metadata
+      const uploadTask = uploadBytes(storageRef, uploadUri, metadata);
   
     }
     
 
+
+
+    ////document uploading fields
     const addDocument = async(data) => {
 
 
         try {
-            const docRef = await addDoc(collection(db, "uploadpin"), data
+            const docRef = await addDoc(collection, data
             
              );
           
